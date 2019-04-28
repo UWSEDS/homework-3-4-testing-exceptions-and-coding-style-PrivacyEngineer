@@ -17,7 +17,8 @@ def validateSizeDF(dfv):
     """
 
     if dfv.shape[1] != len(columns_df):
-        raise ValueError("DataFrame should have %i columns." % (len(columns_df)))
+        raise ValueError("DataFrame should have %i columns." % 
+            (len(columns_df)))
 
 
 def test_create_dataframe(newdf):

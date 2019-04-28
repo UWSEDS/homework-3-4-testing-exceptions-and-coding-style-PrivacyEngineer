@@ -12,19 +12,19 @@ def validateSizeDF(dfv):
     """
     Validates that the number of columns in the tested dataframe is valid.
 
-    Input is a single dataframe (dfv) whose number of colums will be 
+    Input is a single dataframe (dfv) whose number of colums will be
     compared to the reference dataframe (df).
     """
 
     if dfv.shape[1] != len(columns_df):
-        raise ValueError("DataFrame should have %i columns." % 
-            (len(columns_df)))
+        raise ValueError("DataFrame should have %i columns." %
+                         (len(columns_df)))
 
 
 def test_create_dataframe(newdf):
     """
     Compares a preselected dataframe to a new dataframe for similarity.
-    
+
     The function takes a preselected dataframe (df) and compares it to a new
     dataframe (newdf), to see if a set of similarity conditions are met.
     Similarity conditions are:  a) The schema of newdf, its columns and column
@@ -53,21 +53,21 @@ def test_create_dataframe(newdf):
 
 # Read dataframe created in homework 2.
 df_file = ("c:/Users/Castor18/OneDrive/MSDS_UW/Data515_Spr19_Sw_Eng/"
-                "Session3/Homework3/homework-3-4-testing-exceptions-"
-                "and-coding-style-PrivacyEngineer/analysis/"
-                "dataframe.csv")
-df = pd.read_csv(df_file,header=0)
+           "Session3/Homework3/homework-3-4-testing-exceptions-"
+           "and-coding-style-PrivacyEngineer/analysis/dataframe.csv")
+df = pd.read_csv(df_file, header=0)
 # Extracting column names and data types.
 columns_df = list(df.columns)
 data_types_df = list(df.dtypes)
 
 # Read data from original online source to compare.
 url = ("http://data-seattlecitygis.opendata.arcgis.com/datasets/"
-            "a2e1128bd7a041358ce455c628ec9834_8.csv")
+       "a2e1128bd7a041358ce455c628ec9834_8.csv")
 req = requests.get(url)
 assert req.status_code == 200
 raw_df = pd.read_csv(io.StringIO(req.text))
 
+"""
 # Comparing df to a subset of df.
 if test_create_dataframe(df.iloc[:11]):
     print("Conditions hold\n")
@@ -86,3 +86,4 @@ if test_create_dataframe(raw_df):
     print("\nConditions hold\n")
 else:
     print("Fail: Conditions do not hold\n")
+"""

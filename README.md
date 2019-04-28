@@ -1,5 +1,7 @@
 # Homework 3-4: Coding style and Unit tests.
 
+## Please note that VS Code runs Lint automatically, no output if everything is correct
+
 **Note: This homework has a total of 14 points.**
 
 In this homework, you will create two python modules and put them in PEP8 style.

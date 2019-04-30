@@ -3,12 +3,13 @@
 # M.S. Data Science, University of Washington, Spr. 2019.
 # Francisco Javier Salido Magos.
 
+import pytest
 import requests
 import io
 import pandas as pd
 
 
-def validateSizeDF(dfv):
+def validateSizeDF(dfv, columns_df):
     """
     Validates that the number of columns in the tested dataframe is valid.
 
@@ -21,7 +22,7 @@ def validateSizeDF(dfv):
                          (len(columns_df)))
 
 
-def test_create_dataframe(newdf):
+def comp_dataframe(newdf):
     """
     Compares a preselected dataframe to a new dataframe for similarity.
 
@@ -37,53 +38,25 @@ def test_create_dataframe(newdf):
     True if all conditions are met, and False otherwise.
     """
 
-    # First compare the shape of newdf to see if it matches requirements.
-    validateSizeDF(newdf)
+    df = pd.read_csv("dataframe.csv", header=0)
+
+    columns_df = list(df.columns)
+    data_types_df = list(df.dtypes)
+    url = ("http://data-seattlecitygis.opendata.arcgis.com/datasets/"
+           "a2e1128bd7a041358ce455c628ec9834_8.csv")
+    req = requests.get(url)
+    assert req.status_code == 200
+    raw_df = pd.read_csv(io.StringIO(req.text))
+
+    validateSizeDF(newdf, columns_df)
+
     if(newdf.shape[0] >= 10):
-        # Sort newdf columns to compare column names and data types to df.
         newdf = newdf.reindex(sorted(newdf.columns), axis=1)
-        if(list(newdf.columns) == columns_df and
-                list(newdf.dtypes) == data_types_df):
+
+        if(list(newdf.columns) == columns_df and list(newdf.dtypes) ==
+           data_types_df):
             return True
         pass
         return False
     pass
     return False
-
-
-# Read dataframe created in homework 2.
-df_file = ("c:/Users/Castor18/OneDrive/MSDS_UW/Data515_Spr19_Sw_Eng/"
-           "Session3/Homework3/homework-3-4-testing-exceptions-"
-           "and-coding-style-PrivacyEngineer/analysis/dataframe.csv")
-df = pd.read_csv(df_file, header=0)
-# Extracting column names and data types.
-columns_df = list(df.columns)
-data_types_df = list(df.dtypes)
-
-# Read data from original online source to compare.
-url = ("http://data-seattlecitygis.opendata.arcgis.com/datasets/"
-       "a2e1128bd7a041358ce455c628ec9834_8.csv")
-req = requests.get(url)
-assert req.status_code == 200
-raw_df = pd.read_csv(io.StringIO(req.text))
-
-"""
-# Comparing df to a subset of df.
-if test_create_dataframe(df.iloc[:11]):
-    print("Conditions hold\n")
-else:
-    print("Fail: Conditions do not hold\n")
-
-# Comparing df to a subset of df, but the subset is too small.
-if test_create_dataframe(df.iloc[:5]):
-    print("Conditions hold\n")
-else:
-    print("Fail: Conditions do not hold\n")
-
-# Comparing the full (raw) dataframe downloaded from Seattle city website
-#   and df.
-if test_create_dataframe(raw_df):
-    print("\nConditions hold\n")
-else:
-    print("Fail: Conditions do not hold\n")
-"""

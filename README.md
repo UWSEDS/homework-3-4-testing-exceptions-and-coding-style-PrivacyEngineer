@@ -1,5 +1,13 @@
 # Homework 3-4: Coding style and Unit tests.
 
+##### Grade: 12/14    
+-1: In Python, function names by convention use underscores ('_') to separate words, not camelCase.   
+-1: In dataframe.py: you don't need to have a 'pass' that is at the same indentation level right before a return statement. (It might not make a huge difference now, but doing this clusters your code and will likely reduce maintainability in the future.)     
+
+-0: In dataframe.py line #60 - this 'return False' is redundant (you could've let the code fall through to the final return).
+
+-----
+
 ## Please note that VS Code runs Lint automatically, no output if everything is correct
 
 **Note: This homework has a total of 14 points.**

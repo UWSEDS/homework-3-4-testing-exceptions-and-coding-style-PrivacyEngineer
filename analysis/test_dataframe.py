@@ -4,7 +4,7 @@
 # Francisco Javier Salido Magos.
 
 from dataframe import comp_dataframe
-from dataframe import validateSizeDF
+from dataframe import validate_size_df
 import pytest
 
 import requests
@@ -24,7 +24,7 @@ def test_exception():
     req = requests.get(url)
     raw_df = pd.read_csv(io.StringIO(req.text))
     try:
-        validateSizeDF(raw_df, columns_df)
+        validate_size_df(raw_df, columns_df)
         assert(not comp_dataframe(raw_df))
     except ValueError:
         assert(True)
@@ -56,7 +56,7 @@ def test_edgetest1():
     req = requests.get(url)
     raw_df = pd.read_csv(io.StringIO(req.text))
     bad_df = raw_df[["X", "Y", "TYPE", "SCHOOL", "WEBSITE"]]
-    bad_df = bad_df.reindex(sorted(bad_df.columns),axis=1)
+    bad_df = bad_df.reindex(sorted(bad_df.columns), axis=1)
     bad_df["WEBSITE"] = 1
     assert(not comp_dataframe(bad_df))
 
@@ -72,6 +72,6 @@ def test_edgetest2():
     req = requests.get(url)
     raw_df = pd.read_csv(io.StringIO(req.text))
     bad_df = raw_df[["X", "Y", "TYPE", "SCHOOL", "WEBSITE"]]
-    bad_df = bad_df.reindex(sorted(bad_df.columns),axis=1)
+    bad_df = bad_df.reindex(sorted(bad_df.columns), axis=1)
     bad_df.iloc[0, 3] = 'nan'
     assert(not comp_dataframe(bad_df))

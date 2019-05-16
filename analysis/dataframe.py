@@ -9,7 +9,7 @@ import io
 import pandas as pd
 
 
-def validateSizeDF(dfv, columns_df):
+def validate_size_df(dfv, columns_df):
     """
     Validates that the number of columns in the tested dataframe is valid.
 
@@ -48,7 +48,7 @@ def comp_dataframe(newdf):
     assert req.status_code == 200
     raw_df = pd.read_csv(io.StringIO(req.text))
 
-    validateSizeDF(newdf, columns_df)
+    validate_size_df(newdf, columns_df)
 
     if(newdf.shape[0] >= 10):
         newdf = newdf.reindex(sorted(newdf.columns), axis=1)
@@ -56,7 +56,4 @@ def comp_dataframe(newdf):
         if(list(newdf.columns) == columns_df and list(newdf.dtypes) ==
            data_types_df):
             return True
-        pass
-        return False
-    pass
     return False
